@@ -13,6 +13,7 @@ plugins {
 	id 'com.github.johnrengelman.processes' version '0.5.0'
 	// Сборщик фронтенда
 	id 'org.siouan.frontend-jdk11' version '6.0.0'
+	id 'jacoco'
 }
 
 group = 'hexlet.code'
@@ -81,6 +82,12 @@ wrapper {
 
 testlogger {
 	showStandardStreams true
+}
+
+jacocoTestReport {
+	reports {
+		xml.required = true
+	}
 }
 
 checkstyle {
