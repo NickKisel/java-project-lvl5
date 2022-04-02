@@ -98,5 +98,9 @@ tasks.named('test') {
 	useJUnitPlatform()
 }
 
+jar {
+	enabled = false
+}
+
 task stage(dependsOn: [clean, installDist])
 installDist.mustRunAfter clean
