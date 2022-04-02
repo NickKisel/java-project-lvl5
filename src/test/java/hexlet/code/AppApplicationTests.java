@@ -16,17 +16,17 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 @Transactional
 class AppApplicationTests {
 
-	@Autowired
-	private MockMvc mockMvc;
+    @Autowired
+    private MockMvc mockMvc;
 
-	@Test
-	void testRootPage() throws Exception {
-		MockHttpServletResponse response = mockMvc
-				.perform(get("/"))
-				.andReturn()
-				.getResponse();
+    @Test
+    void testRootPage() throws Exception {
+        MockHttpServletResponse response = mockMvc
+                .perform(get("/"))
+                .andReturn()
+                .getResponse();
 
-		assertThat(response.getStatus()).isEqualTo(200);
-		assertThat(response.getContentAsString()).contains("Welcome to Spring");
-	}
+        assertThat(response.getStatus()).isEqualTo(200);
+        assertThat(response.getContentAsString()).contains("Welcome to Spring");
+    }
 }
