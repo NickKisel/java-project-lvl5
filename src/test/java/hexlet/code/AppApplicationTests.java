@@ -22,7 +22,7 @@ class AppApplicationTests {
     @Test
     void testRootPage() throws Exception {
         MockHttpServletResponse response = mockMvc
-                .perform(get("/"))
+                .perform(get("/welcome"))
                 .andReturn()
                 .getResponse();
 
