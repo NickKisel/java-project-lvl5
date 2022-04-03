@@ -32,7 +32,7 @@ check-updates:
 	./gradlew dependencyUpdates
 
 generate-migrations:
-	gradle diffChangeLog
+	./gradlew diffChangeLog
 
 db-migrate:
 	./gradlew update
