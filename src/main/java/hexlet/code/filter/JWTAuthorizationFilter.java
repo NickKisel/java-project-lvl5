@@ -7,6 +7,8 @@ import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import io.micrometer.core.instrument.util.StringUtils;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -40,17 +42,21 @@ public class JWTAuthorizationFilter extends OncePerRequestFilter {
                                     final HttpServletResponse response,
                                     final FilterChain filterChain) throws ServletException, IOException {
 
-        final UsernamePasswordAuthenticationToken authToken = Optional.ofNullable(request.getHeader(AUTHORIZATION))
-                .map(header -> header.replaceFirst("^" + BEARER, ""))
-                .map(String::trim)
-                .map(jwtHelper::verify)
-                .map(claims -> claims.get(SPRING_SECURITY_FORM_USERNAME_KEY))
-                .map(Object::toString)
-                .map(this::buildAuthToken)
-                .orElseThrow();
+        if (StringUtils.isBlank(request.getHeader(AUTHORIZATION))) {
+            response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Please, log in");
+        } else {
+            final UsernamePasswordAuthenticationToken authToken = Optional.ofNullable(request.getHeader(AUTHORIZATION))
+                    .map(header -> header.replaceFirst("^" + BEARER, ""))
+                    .map(String::trim)
+                    .map(jwtHelper::verify)
+                    .map(claims -> claims.get(SPRING_SECURITY_FORM_USERNAME_KEY))
+                    .map(Object::toString)
+                    .map(this::buildAuthToken)
+                    .orElseThrow();
 
-        SecurityContextHolder.getContext().setAuthentication(authToken);
-        filterChain.doFilter(request, response);
+            SecurityContextHolder.getContext().setAuthentication(authToken);
+            filterChain.doFilter(request, response);
+        }
     }
 
     private UsernamePasswordAuthenticationToken buildAuthToken(final String username) {

@@ -14,6 +14,7 @@ import java.util.List;
 import java.util.NoSuchElementException;
 
 import static hexlet.code.controller.UserController.USER_CONTROLLER_PATH;
+import static org.springframework.http.HttpStatus.CREATED;
 
 @RestController
 @RequestMapping("${base-url}" + USER_CONTROLLER_PATH)
@@ -39,6 +40,7 @@ public class UserController {
                 .orElseThrow(() -> new NoSuchElementException("No users with such id"));
     }
 
+    @ResponseStatus(CREATED)
     @PostMapping
     public User createUser(@RequestBody @Valid UserDto userDto) {
         if (userRepository.findByEmail(userDto.getEmail()).isPresent()) {

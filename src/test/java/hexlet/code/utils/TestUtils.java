@@ -34,8 +34,19 @@ public class TestUtils {
             "password"
     );
 
+    private final UserDto testRegistrationDto2 = new UserDto(
+            TEST_USERNAME2,
+            "Egor",
+            "Egor",
+            "password1"
+    );
+
     public UserDto getTestRegistrationDto() {
         return testRegistrationDto;
+    }
+
+    public UserDto getTestRegistrationDto2() {
+        return testRegistrationDto2;
     }
 
     @Autowired
@@ -46,10 +57,6 @@ public class TestUtils {
 
     @Autowired
     private JWTHelper jwtHelper;
-
-    public void tearDown() {
-        userRepository.deleteAll();
-    }
 
     public User getUserByEmail(final String email) {
         return userRepository.findByEmail(email).get();
