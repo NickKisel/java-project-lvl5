@@ -34,11 +34,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     public static final List<GrantedAuthority> DEFAULT_AUTHORITIES = List.of(new SimpleGrantedAuthority("USER"));
 
-    //Note: Сейчас разрешены:
-    // - GET('/api/users')
-    // - POST('/api/users')
-    // - POST('/api/login')
-    // - все запросы НЕ начинающиеся на '/api'
     private final RequestMatcher publicUrls;
     private final RequestMatcher loginRequest;
     private final UserDetailsService userDetailsService;
