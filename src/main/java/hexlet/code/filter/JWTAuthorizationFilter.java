@@ -48,7 +48,7 @@ public class JWTAuthorizationFilter extends OncePerRequestFilter {
                     .map(header -> header.replaceFirst("^" + BEARER, ""))
                     .map(String::trim)
                     .map(jwtHelper::verify)
-                    .map(claims -> claims.get(SPRING_SECURITY_FORM_USERNAME_KEY))
+                    .map(claims -> claims.get("email"))
                     .map(Object::toString)
                     .map(this::buildAuthToken)
                     .orElseThrow();
@@ -58,9 +58,9 @@ public class JWTAuthorizationFilter extends OncePerRequestFilter {
         }
     }
 
-    private UsernamePasswordAuthenticationToken buildAuthToken(final String username) {
+    private UsernamePasswordAuthenticationToken buildAuthToken(final String email) {
         return new UsernamePasswordAuthenticationToken(
-                username,
+                email,
                 null,
                 DEFAULT_AUTHORITIES
         );

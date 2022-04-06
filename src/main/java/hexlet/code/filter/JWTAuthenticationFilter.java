@@ -37,7 +37,7 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
                                                 final HttpServletResponse response) throws AuthenticationException {
         final LoginDto loginData = getLoginData(request);
         final UsernamePasswordAuthenticationToken authRequest = new UsernamePasswordAuthenticationToken(
-                loginData.getUsername(),
+                loginData.getEmail(),
                 loginData.getPassword()
         );
         setDetails(request, authRequest);
@@ -61,7 +61,7 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
                                             final FilterChain chain,
                                             final Authentication authResult) throws IOException {
         final UserDetails user = (UserDetails) authResult.getPrincipal();
-        final String token = jwtHelper.expiring(Map.of(SPRING_SECURITY_FORM_USERNAME_KEY, user.getUsername()));
+        final String token = jwtHelper.expiring(Map.of("email", user.getUsername()));
 
         response.getWriter().println(token);
     }
