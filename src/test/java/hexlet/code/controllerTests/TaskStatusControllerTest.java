@@ -4,32 +4,28 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.github.database.rider.core.api.configuration.DBUnit;
 import com.github.database.rider.core.api.dataset.DataSet;
 import com.github.database.rider.junit5.api.DBRider;
-import hexlet.code.config.SpringConfigTest;
 import hexlet.code.dto.TaskStatusDto;
 import hexlet.code.model.TaskStatus;
 import hexlet.code.repository.TaskStatusRepository;
 import hexlet.code.utils.TestUtils;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.mock.web.MockHttpServletResponse;
-import org.springframework.test.context.ActiveProfiles;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-import static hexlet.code.config.SpringConfigTest.TEST_PROFILE;
 import static hexlet.code.controller.TaskStatusController.TASK_STATUS_PATH;
 import static hexlet.code.controller.UserController.ID;
 import static hexlet.code.utils.TestUtils.fromJsom;
 import static hexlet.code.utils.TestUtils.toJson;
 import static hexlet.code.utils.TestUtils.TEST_USERNAME;
+import static hexlet.code.utils.TestUtils.BASE_URL;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.RANDOM_PORT;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -39,9 +35,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @AutoConfigureMockMvc
-@ActiveProfiles(TEST_PROFILE)
-@ExtendWith(SpringExtension.class)
-@SpringBootTest(webEnvironment = RANDOM_PORT, classes = SpringConfigTest.class)
+@SpringBootTest(webEnvironment = RANDOM_PORT)
 @Transactional
 @DBRider
 @DBUnit(alwaysCleanBefore = true)
@@ -64,7 +58,7 @@ public class TaskStatusControllerTest {
         assertThat(statusRepository.count()).isEqualTo(3);
 
         String statusName = "in process";
-        final MockHttpServletRequestBuilder request = post(TASK_STATUS_PATH)
+        final MockHttpServletRequestBuilder request = post(BASE_URL + TASK_STATUS_PATH)
                 .content(toJson(statusName))
                 .contentType(MediaType.APPLICATION_JSON);
 
@@ -82,7 +76,7 @@ public class TaskStatusControllerTest {
         assertThat(statusRepository.count()).isEqualTo(3);
 
         String statusName = "in process";
-        final MockHttpServletRequestBuilder request = post(TASK_STATUS_PATH)
+        final MockHttpServletRequestBuilder request = post(BASE_URL + TASK_STATUS_PATH)
                 .content(toJson(statusName))
                 .contentType(MediaType.APPLICATION_JSON);
 
@@ -99,7 +93,7 @@ public class TaskStatusControllerTest {
     public void getStatusTest() throws Exception {
         final TaskStatus statusTask = statusRepository.findAll().get(0);
         final MockHttpServletResponse response = testUtils.perform(
-                get(TASK_STATUS_PATH + ID, statusTask.getId())
+                get(BASE_URL + TASK_STATUS_PATH + ID, statusTask.getId())
         ).andExpect(status().isOk())
                 .andReturn()
                 .getResponse();
@@ -112,7 +106,7 @@ public class TaskStatusControllerTest {
     public void getStatusesTest() throws Exception {
         long countStatuses = statusRepository.count();
         final MockHttpServletResponse response = testUtils.perform(
-                        get(TASK_STATUS_PATH)
+                        get(BASE_URL + TASK_STATUS_PATH)
                 ).andExpect(status().isOk())
                 .andReturn()
                 .getResponse();
@@ -127,7 +121,7 @@ public class TaskStatusControllerTest {
         final TaskStatus statusTask = statusRepository.findAll().get(0);
         final TaskStatusDto taskStatusDto = new TaskStatusDto("finished");
         final MockHttpServletRequestBuilder request = put(
-                TASK_STATUS_PATH + ID, statusTask.getId())
+                BASE_URL + TASK_STATUS_PATH + ID, statusTask.getId())
                 .content(toJson(taskStatusDto))
                 .contentType(MediaType.APPLICATION_JSON);
 
@@ -145,7 +139,7 @@ public class TaskStatusControllerTest {
         final TaskStatus statusTask = statusRepository.findAll().get(0);
         final TaskStatusDto taskStatusDto = new TaskStatusDto("finished");
         final MockHttpServletRequestBuilder request = put(
-                TASK_STATUS_PATH + ID, statusTask.getId())
+                BASE_URL + TASK_STATUS_PATH + ID, statusTask.getId())
                 .content(toJson(taskStatusDto))
                 .contentType(MediaType.APPLICATION_JSON);
 
@@ -159,7 +153,7 @@ public class TaskStatusControllerTest {
     public void deleteTaskTest() throws Exception {
         final long id = statusRepository.findAll().get(0).getId();
         testUtils.perform(
-                delete(TASK_STATUS_PATH + ID, id),
+                delete(BASE_URL + TASK_STATUS_PATH + ID, id),
                 TEST_USERNAME)
                 .andExpect(status().isOk());
 
@@ -170,7 +164,7 @@ public class TaskStatusControllerTest {
     public void deleteTaskNegativeTest() throws Exception {
         final long id = statusRepository.findAll().get(0).getId();
         testUtils.perform(
-                        delete(TASK_STATUS_PATH + ID, id))
+                        delete(BASE_URL + TASK_STATUS_PATH + ID, id))
                 .andExpect(status().isUnauthorized());
 
         assertThat(statusRepository.count()).isEqualTo(3);

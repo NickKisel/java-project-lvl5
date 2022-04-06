@@ -23,6 +23,7 @@ public class TestUtils {
 
     public static final String TEST_USERNAME = "nick@nick.com";
     public static final String TEST_USERNAME2 = "mail@mail.com";
+    public static final String BASE_URL = "/api";
 
     private static final ObjectMapper MAPPER = new ObjectMapper().findAndRegisterModules();
 
@@ -62,7 +63,7 @@ public class TestUtils {
     }
 
     public ResultActions regUser(final UserDto userDto) throws Exception {
-        final MockHttpServletRequestBuilder request = post(USER_CONTROLLER_PATH)
+        final MockHttpServletRequestBuilder request = post(BASE_URL + USER_CONTROLLER_PATH)
                 .content(toJson(userDto))
                 .contentType(MediaType.APPLICATION_JSON);
         return perform(request);
