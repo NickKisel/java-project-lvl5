@@ -3,6 +3,7 @@ package hexlet.code.controllerTests;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.github.database.rider.core.api.configuration.DBUnit;
 import com.github.database.rider.core.api.dataset.DataSet;
+import com.github.database.rider.core.api.dataset.SeedStrategy;
 import com.github.database.rider.junit5.api.DBRider;
 import hexlet.code.dto.TaskStatusDto;
 import hexlet.code.model.TaskStatus;
@@ -39,7 +40,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @Transactional
 @DBRider
 @DBUnit(alwaysCleanBefore = true)
-@DataSet("taskStatuses.yml")
+@DataSet(strategy = SeedStrategy.CLEAN_INSERT, cleanBefore = true, value = "taskStatuses.yml")
 public class TaskStatusControllerTest {
 
     @Autowired
