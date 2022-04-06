@@ -1,6 +1,6 @@
 databaseChangeLog:
 - changeSet:
-    id: 1649260808766-1
+    id: 1649267398632-1
     author: insherlolqq (generated)
     changes:
     - createTable:
@@ -21,7 +21,7 @@ databaseChangeLog:
             type: VARCHAR(255)
         tableName: task_statuses
 - changeSet:
-    id: 1649260808766-2
+    id: 1649267398632-2
     author: insherlolqq (generated)
     changes:
     - createTable:
@@ -51,7 +51,7 @@ databaseChangeLog:
             type: VARCHAR(255)
         tableName: users
 - changeSet:
-    id: 1649260808766-3
+    id: 1649267398632-3
     author: insherlolqq (generated)
     changes:
     - addUniqueConstraint:

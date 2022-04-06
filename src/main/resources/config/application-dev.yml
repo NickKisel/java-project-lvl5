@@ -1,6 +1,6 @@
 spring:
   datasource:
-    url: "jdbc:h2:./project"
+    url: "jdbc:h2:./taskManager"
     username: "sa"
     password: ""
 
