@@ -40,3 +40,7 @@ out/
 node
 fronetend/build
 frontend/node_modules
+
+### DB local ###
+project.mv.db
+project.trace.db

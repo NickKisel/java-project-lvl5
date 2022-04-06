@@ -4,7 +4,6 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import hexlet.code.dto.UserDto;
-import hexlet.code.model.User;
 import hexlet.code.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -58,10 +57,6 @@ public class TestUtils {
     @Autowired
     private JWTHelper jwtHelper;
 
-    public User getUserByEmail(final String email) {
-        return userRepository.findByEmail(email).get();
-    }
-
     public ResultActions regDefaultUser() throws Exception {
         return regUser(testRegistrationDto);
     }
@@ -78,7 +73,7 @@ public class TestUtils {
     }
 
     public ResultActions perform(final MockHttpServletRequestBuilder request, final String username) throws Exception {
-        final String token = jwtHelper.expiring(Map.of("username", username));
+        final String token = jwtHelper.expiring(Map.of("email", username));
         request.header(AUTHORIZATION, token);
         return perform(request);
     }
