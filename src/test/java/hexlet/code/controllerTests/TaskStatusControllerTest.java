@@ -39,7 +39,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @Transactional
 @DBRider
 @DBUnit(alwaysCleanBefore = true)
-@DataSet("statuses.yml")
+@DataSet("taskStatuses.yml")
 public class TaskStatusControllerTest {
 
     @Autowired
