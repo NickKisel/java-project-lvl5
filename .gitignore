@@ -44,3 +44,5 @@ frontend/node_modules
 ### DB local ###
 project.mv.db
 project.trace.db
+taskManager.mv.db
+taskManager.trace.db
