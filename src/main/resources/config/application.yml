@@ -7,11 +7,11 @@ spring:
   application:
     name: hexletProject
 
-  liquibase:
-    enabled: true
-    change-log: classpath:db/changelog/changelog-master.xml
-
   mvc:
     hiddenmethod:
       filter:
-        enabled: true
+        enabled:
+
+  jackson:
+    serialization:
+      fail-on-empty-beans: false
