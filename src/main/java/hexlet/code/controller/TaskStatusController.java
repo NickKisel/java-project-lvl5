@@ -6,6 +6,7 @@ import hexlet.code.repository.TaskStatusRepository;
 import hexlet.code.service.TaskStatusServiceImpl;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -14,11 +15,13 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.ResponseStatus;
 
 import java.util.List;
 
 import static hexlet.code.controller.TaskStatusController.TASK_STATUS_PATH;
 import static hexlet.code.controller.UserController.ID;
+import static org.springframework.http.HttpStatus.CREATED;
 
 @RestController
 @RequestMapping("${base-url}" + TASK_STATUS_PATH)
@@ -39,6 +42,7 @@ public class TaskStatusController {
     }
 
     @PutMapping(ID)
+    @PreAuthorize("hasAuthority('USER')")
     public TaskStatus updateTaskStatus(
             @PathVariable long id,
             @RequestBody TaskStatusDto taskStatusDto
@@ -47,6 +51,7 @@ public class TaskStatusController {
     }
 
     @DeleteMapping(ID)
+    @PreAuthorize("hasAuthority('USER')")
     public void deleteTaskStatus(@PathVariable long id) {
         final TaskStatus taskStatus = statusRepository.getById(id);
         statusRepository.delete(taskStatus);
@@ -58,6 +63,8 @@ public class TaskStatusController {
     }
 
     @PostMapping
+    @ResponseStatus(CREATED)
+    @PreAuthorize("hasAuthority('USER')")
     public TaskStatus createTaskStatus(@RequestBody TaskStatusDto taskStatusDto) {
         return taskStatusService.createStatus(taskStatusDto);
     }

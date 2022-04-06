@@ -13,7 +13,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Temporal;
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Size;
 import java.util.Date;
 
 import static javax.persistence.TemporalType.TIMESTAMP;
@@ -31,7 +30,6 @@ public class TaskStatus {
     private long id;
 
     @NotBlank
-    @Size(min = 3, max = 1000)
     private String name;
 
     @CreationTimestamp

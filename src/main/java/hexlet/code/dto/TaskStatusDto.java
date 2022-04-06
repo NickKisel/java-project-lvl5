@@ -5,7 +5,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Size;
 
 @Data
 @AllArgsConstructor
@@ -13,6 +12,5 @@ import javax.validation.constraints.Size;
 public class TaskStatusDto {
 
     @NotBlank
-    @Size(min = 3, max = 1000)
     private String name;
 }
