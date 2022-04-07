@@ -69,8 +69,6 @@ public class UserController {
     @DeleteMapping(ID)
     @PreAuthorize(ONLY_OWNER_BY_ID)
     public void deleteUser(@PathVariable long id) {
-        final User user = userRepository.findById(id)
-                .orElseThrow(() -> new NoSuchElementException("No users with such id"));
         userService.deleteUser(id);
     }
 }

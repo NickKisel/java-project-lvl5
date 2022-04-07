@@ -3,7 +3,9 @@ package hexlet.code.config.security;
 import hexlet.code.filter.JWTAuthenticationFilter;
 import hexlet.code.filter.JWTAuthorizationFilter;
 import hexlet.code.utils.JWTHelper;
+
 import java.util.List;
+
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -21,6 +23,7 @@ import org.springframework.security.web.util.matcher.NegatedRequestMatcher;
 import org.springframework.security.web.util.matcher.OrRequestMatcher;
 import org.springframework.security.web.util.matcher.RequestMatcher;
 
+import static hexlet.code.controller.TaskController.TASK_PATH;
 import static hexlet.code.controller.TaskStatusController.TASK_STATUS_PATH;
 import static hexlet.code.controller.UserController.USER_CONTROLLER_PATH;
 import static org.springframework.http.HttpMethod.GET;
@@ -51,6 +54,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 new AntPathRequestMatcher(baseUrl + USER_CONTROLLER_PATH, GET.toString()),
                 new AntPathRequestMatcher(baseUrl + TASK_STATUS_PATH, GET.toString()),
                 new AntPathRequestMatcher(baseUrl + TASK_STATUS_PATH + "/**", GET.toString()),
+                new AntPathRequestMatcher(baseUrl + TASK_PATH, GET.toString()),
+                new AntPathRequestMatcher(baseUrl + TASK_PATH + "/**", GET.toString()),
                 new NegatedRequestMatcher(new AntPathRequestMatcher(baseUrl + "/**"))
         );
         this.userDetailsService = userDetailsService;
@@ -79,6 +84,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         );
 
         http.csrf().disable()
+                .headers().frameOptions().disable()
+                .and()
                 .authorizeRequests()
                 .requestMatchers(publicUrls).permitAll()
                 .anyRequest().authenticated()

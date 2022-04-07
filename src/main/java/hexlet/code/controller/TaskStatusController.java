@@ -53,8 +53,7 @@ public class TaskStatusController {
     @DeleteMapping(ID)
     @PreAuthorize("hasAuthority('USER')")
     public void deleteTaskStatus(@PathVariable long id) {
-        final TaskStatus taskStatus = statusRepository.getById(id);
-        statusRepository.delete(taskStatus);
+        taskStatusService.deleteTaskStatus(id);
     }
 
     @GetMapping

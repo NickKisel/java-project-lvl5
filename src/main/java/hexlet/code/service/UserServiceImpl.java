@@ -2,8 +2,10 @@ package hexlet.code.service;
 
 import hexlet.code.dto.UserDto;
 import hexlet.code.model.User;
+import hexlet.code.repository.TaskRepository;
 import hexlet.code.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -18,6 +20,9 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private TaskRepository taskRepository;
 
     @Autowired
     private PasswordEncoder passwordEncoder;
@@ -45,6 +50,10 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     @Override
     public void deleteUser(long id) {
         final User user = userRepository.findById(id).get();
+        boolean isPresentTaskForUser = taskRepository.findFirstByAuthorIdOrExecutorId(id, id).isPresent();
+        if (isPresentTaskForUser) {
+            throw new DataIntegrityViolationException("Can't delete user with present tasks");
+        }
         userRepository.delete(user);
     }
 

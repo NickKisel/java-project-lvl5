@@ -21,7 +21,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 @Component
 public class TestUtils {
 
-    public static final String TEST_USERNAME = "nick@nick.com";
+    public static final String TEST_USERNAME = "petr@petr.com";
     public static final String TEST_USERNAME2 = "mail@mail.com";
     public static final String BASE_URL = "/api";
 
