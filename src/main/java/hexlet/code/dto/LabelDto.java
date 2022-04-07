@@ -1,29 +1,18 @@
 package hexlet.code.dto;
 
-import hexlet.code.model.Label;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
-import java.util.List;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class TaskDto {
+public class LabelDto {
 
     @NotNull
     @NotBlank
     private String name;
-
-    private String description;
-
-    private long executorId;
-
-    @NotNull
-    private long taskStatusId;
-
-    private List<Label> labels;
 }

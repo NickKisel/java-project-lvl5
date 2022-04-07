@@ -4,7 +4,6 @@ import hexlet.code.dto.TaskStatusDto;
 import hexlet.code.model.TaskStatus;
 import hexlet.code.repository.TaskStatusRepository;
 import hexlet.code.service.TaskStatusServiceImpl;
-import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.RestController;
@@ -17,6 +16,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
+import javax.validation.Valid;
 import java.util.List;
 
 import static hexlet.code.controller.TaskStatusController.TASK_STATUS_PATH;
@@ -25,7 +25,6 @@ import static org.springframework.http.HttpStatus.CREATED;
 
 @RestController
 @RequestMapping("${base-url}" + TASK_STATUS_PATH)
-@AllArgsConstructor
 public class TaskStatusController {
 
     public static final String TASK_STATUS_PATH = "/statuses";
@@ -45,7 +44,7 @@ public class TaskStatusController {
     @PreAuthorize("hasAuthority('USER')")
     public TaskStatus updateTaskStatus(
             @PathVariable long id,
-            @RequestBody TaskStatusDto taskStatusDto
+            @RequestBody @Valid TaskStatusDto taskStatusDto
     ) {
         return taskStatusService.updateTaskStatus(id, taskStatusDto);
     }
@@ -64,7 +63,7 @@ public class TaskStatusController {
     @PostMapping
     @ResponseStatus(CREATED)
     @PreAuthorize("hasAuthority('USER')")
-    public TaskStatus createTaskStatus(@RequestBody TaskStatusDto taskStatusDto) {
+    public TaskStatus createTaskStatus(@RequestBody @Valid TaskStatusDto taskStatusDto) {
         return taskStatusService.createStatus(taskStatusDto);
     }
 }

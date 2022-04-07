@@ -52,7 +52,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         final User user = userRepository.findById(id).get();
         boolean isPresentTaskForUser = taskRepository.findFirstByAuthorIdOrExecutorId(id, id).isPresent();
         if (isPresentTaskForUser) {
-            throw new DataIntegrityViolationException("Can't delete user with present tasks");
+            throw new DataIntegrityViolationException("Can't delete user with existing task(s)");
         }
         userRepository.delete(user);
     }

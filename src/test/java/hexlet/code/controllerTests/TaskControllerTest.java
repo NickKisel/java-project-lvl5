@@ -88,7 +88,8 @@ public class TaskControllerTest {
                 "create test task",
                 "this is test",
                 1,
-                1
+                1,
+                null
         );
         final MockHttpServletRequestBuilder request = post(
                 BASE_URL + TASK_PATH)
@@ -117,7 +118,8 @@ public class TaskControllerTest {
                 "create test task",
                 "this is test",
                 1,
-                1
+                1,
+                null
         );
         final MockHttpServletRequestBuilder request = post(
                 BASE_URL + TASK_PATH)
@@ -136,7 +138,8 @@ public class TaskControllerTest {
                 "update test task",
                 "this is test",
                 1,
-                1
+                1,
+                null
         );
         final MockHttpServletRequestBuilder request = put(BASE_URL + TASK_PATH + ID, 1)
                 .contentType(MediaType.APPLICATION_JSON)
@@ -160,7 +163,8 @@ public class TaskControllerTest {
                 "update test task",
                 "this is test",
                 1,
-                1
+                1,
+                null
         );
         final MockHttpServletRequestBuilder request = put(BASE_URL + TASK_PATH + ID, 1)
                 .contentType(MediaType.APPLICATION_JSON)
@@ -183,7 +187,7 @@ public class TaskControllerTest {
     }
 
     @Test
-    public void deleteTaskNegative() throws Exception {
+    public void deleteTaskNegativeForbidden() throws Exception {
         assertThat(taskRepository.count()).isEqualTo(2);
 
         testUtils.perform(delete(BASE_URL + TASK_PATH + ID, 1), "Ivan@Ivan.com")
