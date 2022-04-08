@@ -1,6 +1,6 @@
 spring:
   datasource:
-    url: "jdbc:h2:./newTaskManager"
+    url: "jdbc:h2:./hexletProjectDb"
     username: "sa"
     password: ""
 
