@@ -89,7 +89,7 @@ liquibase {
 	activities {
 		main {
 			changeLogFile 'src/main/resources/db/changelog/db.changelog-master.yaml'
-			url 'jdbc:h2:./taskManagerDB'
+			url 'jdbc:h2:./manager'
 			username 'sa'
 			password ''
 			referenceUrl 'hibernate:spring:hexlet.code.model' +
