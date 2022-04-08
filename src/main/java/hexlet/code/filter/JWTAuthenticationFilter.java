@@ -1,5 +1,6 @@
 package hexlet.code.filter;
 
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import hexlet.code.dto.LoginDto;
 import hexlet.code.utils.JWTHelper;
@@ -49,7 +50,9 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
             final String json = request.getReader()
                     .lines()
                     .collect(Collectors.joining());
-            return MAPPER.readValue(json, LoginDto.class);
+            Map<String, String> mapRequest = MAPPER.readValue(json, new TypeReference<>() {
+            });
+            return new LoginDto(mapRequest.get("email"), mapRequest.get("password"));
         } catch (IOException e) {
             throw new BadCredentialsException("Can't extract login data from request");
         }
