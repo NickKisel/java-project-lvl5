@@ -18,6 +18,7 @@ import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilde
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Set;
 
 import static hexlet.code.controller.TaskController.TASK_PATH;
 import static hexlet.code.controller.UserController.ID;
@@ -82,7 +83,7 @@ public class TaskControllerTest {
 
     @Test
     public void getTask() throws Exception {
-        final Task task = taskRepository.getById(1L);
+        final Task task = taskRepository.findById(1L).get();
         final MockHttpServletResponse response = testUtils.perform(
                 get(BASE_URL + TASK_PATH + ID, task.getId()))
                 .andExpect(status().isOk())
@@ -106,7 +107,7 @@ public class TaskControllerTest {
                 "this is test",
                 1,
                 1,
-                null
+                Set.of(1L)
         );
         final MockHttpServletRequestBuilder request = post(
                 BASE_URL + TASK_PATH)
@@ -136,7 +137,7 @@ public class TaskControllerTest {
                 "this is test",
                 1,
                 1,
-                null
+                Set.of(2L)
         );
         final MockHttpServletRequestBuilder request = post(
                 BASE_URL + TASK_PATH)
@@ -156,7 +157,7 @@ public class TaskControllerTest {
                 "this is test",
                 1,
                 1,
-                null
+                Set.of(2L)
         );
         final MockHttpServletRequestBuilder request = put(BASE_URL + TASK_PATH + ID, 1)
                 .contentType(MediaType.APPLICATION_JSON)
@@ -181,7 +182,7 @@ public class TaskControllerTest {
                 "this is test",
                 1,
                 1,
-                null
+                Set.of()
         );
         final MockHttpServletRequestBuilder request = put(BASE_URL + TASK_PATH + ID, 1)
                 .contentType(MediaType.APPLICATION_JSON)

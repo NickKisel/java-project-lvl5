@@ -15,8 +15,7 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 @ComponentScan({
 
 // UPDATE TO YOUR PROJECT PACKAGE
-        "com.example.app",
-        "com.rollbar.spring"
+        "com.example.app"
 
 })
 public class RollbarConfig {
