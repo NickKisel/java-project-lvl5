@@ -10,6 +10,8 @@ import hexlet.code.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.NoSuchElementException;
+
 @Service
 public class TaskServiceImpl implements TaskService {
 
@@ -46,7 +48,8 @@ public class TaskServiceImpl implements TaskService {
 
     @Override
     public Task updateTask(long id, TaskDto taskDto) {
-        final Task task = taskRepository.getById(id);
+        final Task task = taskRepository.findById(id)
+                .orElseThrow(() -> new NoSuchElementException("Task not found"));
 
         final TaskStatus taskStatus = taskStatusRepository.getById(taskDto.getTaskStatusId());
 

@@ -4,6 +4,12 @@ import hexlet.code.dto.UserDto;
 import hexlet.code.model.User;
 import hexlet.code.repository.UserRepository;
 import hexlet.code.service.UserServiceImpl;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -39,38 +45,78 @@ public class UserController {
     @Autowired
     private UserServiceImpl userService;
 
+    @Operation(summary = "Get list of Users")
+    @ApiResponse(responseCode = "200", description = "List of all users", content =
+    @Content(mediaType = "application/json", schema = @Schema(implementation = User.class)))
     @GetMapping
     public List<User> getUsers() {
         return userRepository.findAll();
     }
 
+    @Operation(summary = "Get User by id")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "User found", content =
+            @Content(mediaType = "application/json", schema = @Schema(implementation = User.class))),
+            @ApiResponse(responseCode = "401", description = "User is unauthorized"),
+            @ApiResponse(responseCode = "404", description = "User not found")
+    })
     @GetMapping(path = ID)
-    public User getUser(@PathVariable long id) {
+    public User getUser(
+            @Parameter(description = "Id of User to be found")
+            @PathVariable long id) {
         return userRepository.findById(id)
-                .orElseThrow(() -> new NoSuchElementException("No users with such id"));
+                .orElseThrow(() -> new NoSuchElementException("No Users with such id"));
     }
 
+    @Operation(summary = "Create new User")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "201", description = "User created", content =
+            @Content(mediaType = "application/json", schema = @Schema(implementation = User.class))),
+            @ApiResponse(responseCode = "401", description = "User is unauthorized"),
+            @ApiResponse(responseCode = "422", description = "Data validation failed/ email already exist")
+    })
     @ResponseStatus(CREATED)
     @PostMapping
-    public User createUser(@RequestBody @Valid UserDto userDto) {
+    public User createUser(
+            @Parameter(description = "Data for creating new User", required = true)
+            @RequestBody @Valid UserDto userDto) {
         if (userRepository.findByEmail(userDto.getEmail()).isPresent()) {
             throw new DuplicateKeyException("User with this email is already exist");
         }
         return userService.createUser(userDto);
     }
 
+    @Operation(summary = "Update User")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "User updated", content =
+            @Content(mediaType = "application/json", schema = @Schema(implementation = User.class))),
+            @ApiResponse(responseCode = "401", description = "User is unauthorized"),
+            @ApiResponse(responseCode = "403", description = "Operation available only for owner"),
+            @ApiResponse(responseCode = "404", description = "User not found"),
+            @ApiResponse(responseCode = "422", description = "Data validation failed")
+    })
     @PutMapping(ID)
     @PreAuthorize(ONLY_OWNER_BY_ID)
     public User updateUser(
+            @Parameter(description = "Id of User to be updated", required = true)
             @PathVariable long id,
+            @Parameter(description = "Data for updating User", required = true)
             @RequestBody @Valid UserDto userDto
     ) {
         return userService.updateUser(id, userDto);
     }
 
+    @Operation(summary = "Delete User")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "User deleted"),
+            @ApiResponse(responseCode = "403", description = "Operation available only for owner"),
+            @ApiResponse(responseCode = "404", description = "User not found")
+    })
     @DeleteMapping(ID)
     @PreAuthorize(ONLY_OWNER_BY_ID)
-    public void deleteUser(@PathVariable long id) {
+    public void deleteUser(
+            @Parameter(description = "Id of User to be deleted", required = true)
+            @PathVariable long id) {
         userService.deleteUser(id);
     }
 }

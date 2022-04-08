@@ -5,7 +5,6 @@ import hexlet.code.model.TaskStatus;
 import hexlet.code.repository.TaskStatusRepository;
 import hexlet.code.service.TaskStatusServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -41,7 +40,6 @@ public class TaskStatusController {
     }
 
     @PutMapping(ID)
-    @PreAuthorize("hasAuthority('USER')")
     public TaskStatus updateTaskStatus(
             @PathVariable long id,
             @RequestBody @Valid TaskStatusDto taskStatusDto
@@ -50,7 +48,6 @@ public class TaskStatusController {
     }
 
     @DeleteMapping(ID)
-    @PreAuthorize("hasAuthority('USER')")
     public void deleteTaskStatus(@PathVariable long id) {
         taskStatusService.deleteTaskStatus(id);
     }
@@ -62,7 +59,6 @@ public class TaskStatusController {
 
     @PostMapping
     @ResponseStatus(CREATED)
-    @PreAuthorize("hasAuthority('USER')")
     public TaskStatus createTaskStatus(@RequestBody @Valid TaskStatusDto taskStatusDto) {
         return taskStatusService.createStatus(taskStatusDto);
     }

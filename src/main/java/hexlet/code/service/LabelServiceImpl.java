@@ -10,6 +10,7 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 
 @Service
 public class LabelServiceImpl implements LabelService {
@@ -29,14 +30,16 @@ public class LabelServiceImpl implements LabelService {
 
     @Override
     public Label updateLabel(long id, LabelDto labelDto) {
-        final Label label = labelRepository.getById(id);
+        final Label label = labelRepository.findById(id)
+                .orElseThrow(() -> new NoSuchElementException("Label not found"));
         label.setName(labelDto.getName());
         return labelRepository.save(label);
     }
 
     @Override
     public void deleteLabel(long id) {
-        final Label label = labelRepository.getById(id);
+        final Label label = labelRepository.findById(id)
+                .orElseThrow(() -> new NoSuchElementException("Label not found"));
         List<Task> tasks = taskRepository.findByLabels(label);
         if (tasks.isEmpty()) {
             labelRepository.delete(label);

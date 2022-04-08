@@ -64,6 +64,23 @@ public class TaskControllerTest {
     }
 
     @Test
+    public void getAllTasksQueryDsl() throws Exception {
+        String queryDsl = "?taskStatus=1&executorId=2";
+        final MockHttpServletResponse response = testUtils.perform(
+                        get(BASE_URL + TASK_PATH + queryDsl))
+                .andExpect(status().isOk())
+                .andReturn()
+                .getResponse();
+
+        assertThat(response.getContentAsString()).contains("taskOne");
+        assertThat(response.getContentAsString()).doesNotContain("taskTwo");
+        List<Task> tasks = fromJsom(response.getContentAsString(), new TypeReference<>() {
+        });
+
+        assertThat(tasks.size()).isEqualTo(1);
+    }
+
+    @Test
     public void getTask() throws Exception {
         final Task task = taskRepository.getById(1L);
         final MockHttpServletResponse response = testUtils.perform(

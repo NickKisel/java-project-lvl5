@@ -13,6 +13,8 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.NoSuchElementException;
+
 import static hexlet.code.config.security.SecurityConfig.DEFAULT_AUTHORITIES;
 
 @Service
@@ -39,7 +41,8 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 
     @Override
     public User updateUser(long id, UserDto userDto) {
-        final User user = userRepository.findById(id).get();
+        final User user = userRepository.findById(id)
+                .orElseThrow(() -> new NoSuchElementException());
         user.setFirstName(userDto.getFirstName());
         user.setLastName(userDto.getLastName());
         user.setEmail(userDto.getEmail());
