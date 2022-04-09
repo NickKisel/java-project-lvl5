@@ -60,10 +60,10 @@ public class UserController {
             @ApiResponse(responseCode = "401", description = "User is unauthorized"),
             @ApiResponse(responseCode = "404", description = "User not found")
     })
-    @GetMapping(path = ID)
+    @GetMapping(ID)
     public User getUser(
             @Parameter(description = "Id of User to be found")
-            @PathVariable long id) {
+            @PathVariable Long id) {
         return userRepository.findById(id)
                 .orElseThrow(() -> new NoSuchElementException("No Users with such id"));
     }
