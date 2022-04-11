@@ -66,6 +66,6 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         final UserDetails user = (UserDetails) authResult.getPrincipal();
         final String token = jwtHelper.expiring(Map.of("email", user.getUsername()));
 
-        response.getWriter().println(token);
+        response.getWriter().print(token);
     }
 }

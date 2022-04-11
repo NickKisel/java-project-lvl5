@@ -99,7 +99,7 @@ public class UserController {
     @PreAuthorize(ONLY_OWNER_BY_ID)
     public User updateUser(
             @Parameter(description = "Id of User to be updated", required = true)
-            @PathVariable long id,
+            @PathVariable Long id,
             @Parameter(description = "Data for updating User", required = true)
             @RequestBody @Valid UserDto userDto
     ) {
@@ -116,7 +116,7 @@ public class UserController {
     @PreAuthorize(ONLY_OWNER_BY_ID)
     public void deleteUser(
             @Parameter(description = "Id of User to be deleted", required = true)
-            @PathVariable long id) {
+            @PathVariable Long id) {
         userService.deleteUser(id);
     }
 }

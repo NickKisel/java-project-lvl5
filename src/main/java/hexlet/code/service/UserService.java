@@ -6,8 +6,8 @@ import hexlet.code.model.User;
 
 public interface UserService {
     User createUser(UserDto userDto);
-    User updateUser(long id, UserDto userDto);
-    void deleteUser(long id);
+    User updateUser(Long id, UserDto userDto);
+    void deleteUser(Long id);
     String getCurrentUserName();
     User getCurrentUser();
 }

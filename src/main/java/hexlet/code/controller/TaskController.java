@@ -55,7 +55,7 @@ public class TaskController {
     @GetMapping(ID)
     public Task getTask(
             @Parameter(description = "Id of Task to be found", required = true)
-            @PathVariable long id) {
+            @PathVariable Long id) {
         return taskRepository.findById(id)
                 .orElseThrow(() -> new NoSuchElementException("Task with such id not found"));
     }
@@ -94,7 +94,7 @@ public class TaskController {
     @PutMapping(ID)
     public Task updateTask(
             @Parameter(description = "Id of Task to be updated", required = true)
-            @PathVariable long id,
+            @PathVariable Long id,
             @Parameter(description = "Data for updating Task", required = true)
             @RequestBody @Valid TaskDto taskDto
     ) {
@@ -111,7 +111,7 @@ public class TaskController {
     @PreAuthorize(ONLY_OWNER_BY_ID)
     public void deleteTask(
             @Parameter(description = "Id of Task to be deleted")
-            @PathVariable long id
+            @PathVariable Long id
     ) {
         taskRepository.deleteById(id);
     }

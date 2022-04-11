@@ -40,7 +40,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     }
 
     @Override
-    public User updateUser(long id, UserDto userDto) {
+    public User updateUser(Long id, UserDto userDto) {
         final User user = userRepository.findById(id)
                 .orElseThrow(() -> new NoSuchElementException());
         user.setFirstName(userDto.getFirstName());
@@ -51,7 +51,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     }
 
     @Override
-    public void deleteUser(long id) {
+    public void deleteUser(Long id) {
         final User user = userRepository.findById(id).get();
         boolean isPresentTaskForUser = taskRepository.findFirstByAuthorIdOrExecutorId(id, id).isPresent();
         if (isPresentTaskForUser) {

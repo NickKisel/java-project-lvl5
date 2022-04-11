@@ -35,20 +35,20 @@ public class TaskStatusController {
     private TaskStatusRepository statusRepository;
 
     @GetMapping(ID)
-    public TaskStatus getTaskStatus(@PathVariable long id) {
+    public TaskStatus getTaskStatus(@PathVariable Long id) {
         return statusRepository.getById(id);
     }
 
     @PutMapping(ID)
     public TaskStatus updateTaskStatus(
-            @PathVariable long id,
+            @PathVariable Long id,
             @RequestBody @Valid TaskStatusDto taskStatusDto
     ) {
         return taskStatusService.updateTaskStatus(id, taskStatusDto);
     }
 
     @DeleteMapping(ID)
-    public void deleteTaskStatus(@PathVariable long id) {
+    public void deleteTaskStatus(@PathVariable Long id) {
         taskStatusService.deleteTaskStatus(id);
     }
 

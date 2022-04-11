@@ -51,7 +51,7 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
-    public Task updateTask(long id, TaskDto taskDto) {
+    public Task updateTask(Long id, TaskDto taskDto) {
         final Task task = taskRepository.findById(id)
                 .orElseThrow(() -> new NoSuchElementException("Task not found"));
 

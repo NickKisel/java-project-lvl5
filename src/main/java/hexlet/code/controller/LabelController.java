@@ -53,7 +53,7 @@ public class LabelController {
     @GetMapping(ID)
     public Label getLabel(
             @Parameter(description = "Id of Label to be found")
-            @PathVariable long id) {
+            @PathVariable Long id) {
         return labelRepository.findById(id)
                 .orElseThrow(() -> new NoSuchElementException("Label not found"));
     }
@@ -95,7 +95,7 @@ public class LabelController {
     @PutMapping(ID)
     public Label updateLabel(
             @Parameter(description = "Id of Label to be updated", required = true)
-            @PathVariable long id,
+            @PathVariable Long id,
             @Parameter(description = "Data for updating Label", required = true)
             @RequestBody @Valid LabelDto labelDto
     ) {
@@ -113,7 +113,7 @@ public class LabelController {
     @DeleteMapping(ID)
     public void deleteLabel(
             @Parameter(description = "Id of Label to be deleted")
-            @PathVariable long id) {
+            @PathVariable Long id) {
         labelService.deleteLabel(id);
     }
 }

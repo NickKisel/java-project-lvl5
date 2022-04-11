@@ -25,14 +25,14 @@ public class TaskStatusServiceImpl implements TaskStatusService {
     }
 
     @Override
-    public TaskStatus updateTaskStatus(long id, TaskStatusDto taskStatusDto) {
+    public TaskStatus updateTaskStatus(Long id, TaskStatusDto taskStatusDto) {
         final TaskStatus taskStatus = taskStatusRepository.findById(id).get();
         taskStatus.setName(taskStatusDto.getName());
         return taskStatusRepository.save(taskStatus);
     }
 
     @Override
-    public void deleteTaskStatus(long id) {
+    public void deleteTaskStatus(Long id) {
         boolean isPresentTask = taskRepository.findByTaskStatusId(id).isPresent();
 
         if (isPresentTask) {

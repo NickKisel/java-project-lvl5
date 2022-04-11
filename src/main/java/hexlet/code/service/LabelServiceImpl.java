@@ -29,7 +29,7 @@ public class LabelServiceImpl implements LabelService {
     }
 
     @Override
-    public Label updateLabel(long id, LabelDto labelDto) {
+    public Label updateLabel(Long id, LabelDto labelDto) {
         final Label label = labelRepository.findById(id)
                 .orElseThrow(() -> new NoSuchElementException("Label not found"));
         label.setName(labelDto.getName());
@@ -37,7 +37,7 @@ public class LabelServiceImpl implements LabelService {
     }
 
     @Override
-    public void deleteLabel(long id) {
+    public void deleteLabel(Long id) {
         final Label label = labelRepository.findById(id)
                 .orElseThrow(() -> new NoSuchElementException("Label not found"));
         List<Task> tasks = taskRepository.findByLabels(label);
