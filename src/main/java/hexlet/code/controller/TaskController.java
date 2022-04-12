@@ -14,6 +14,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.querydsl.binding.QuerydslPredicate;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -64,11 +65,9 @@ public class TaskController {
     @ApiResponse(responseCode = "200", description = "List of all Tasks", content =
     @Content(mediaType = "application/json", schema = @Schema(implementation = Task.class)))
     @GetMapping
+    @Transactional
     public Iterable<Task> getAllTasks(@QuerydslPredicate(root = Task.class) Predicate predicate) {
-        if (predicate != null) {
             return taskRepository.findAll(predicate);
-        }
-        return taskRepository.findAll();
     }
 
     @Operation(summary = "Creating new Task")
