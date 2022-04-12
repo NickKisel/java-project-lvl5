@@ -1,7 +1,18 @@
 spring:
+  devtools:
+    restart:
+      enabled: false
+    livereload:
+      enabled: false
+
   datasource:
     url: ${JDBC_DATABASE_URL}
 
+  jackson:
+      serialization:
+        fail-on-empty-beans: false
+
 logging:
   level:
-    ROOT: DEBUG
+    ROOT: INFO
+    WEB: DEBUG
