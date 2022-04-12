@@ -65,7 +65,10 @@ public class TaskController {
     @Content(mediaType = "application/json", schema = @Schema(implementation = Task.class)))
     @GetMapping
     public Iterable<Task> getAllTasks(@QuerydslPredicate(root = Task.class) Predicate predicate) {
-        return taskRepository.findAll(predicate);
+        if (predicate != null) {
+            return taskRepository.findAll(predicate);
+        }
+        return taskRepository.findAll();
     }
 
     @Operation(summary = "Creating new Task")
