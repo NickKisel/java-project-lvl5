@@ -28,6 +28,7 @@ public class RollbarConfig {
 
     /**
      * Register a Rollbar bean to configure App with Rollbar.
+     * @return config
      */
     @Bean
     public Rollbar rollbar() {
