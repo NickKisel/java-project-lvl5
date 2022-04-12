@@ -8,10 +8,6 @@ spring:
   datasource:
     url: ${JDBC_DATABASE_URL}
 
-  jackson:
-      serialization:
-        fail-on-empty-beans: false
-
 logging:
   level:
     ROOT: INFO
