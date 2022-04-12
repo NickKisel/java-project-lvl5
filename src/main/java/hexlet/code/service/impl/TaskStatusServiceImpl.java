@@ -8,6 +8,9 @@ import hexlet.code.service.TaskStatusService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.NoSuchElementException;
 
 @Service
 public class TaskStatusServiceImpl implements TaskStatusService {
@@ -33,6 +36,7 @@ public class TaskStatusServiceImpl implements TaskStatusService {
     }
 
     @Override
+    @Transactional
     public void deleteTaskStatus(Long id) {
         boolean isPresentTask = taskRepository.findByTaskStatusId(id).isPresent();
 
@@ -40,7 +44,7 @@ public class TaskStatusServiceImpl implements TaskStatusService {
             throw new DataIntegrityViolationException("Can't delete status associated with present task");
         }
 
-        final TaskStatus taskStatus = taskStatusRepository.getById(id);
+        final TaskStatus taskStatus = taskStatusRepository.findById(id).get();
         taskStatusRepository.delete(taskStatus);
     }
 }
