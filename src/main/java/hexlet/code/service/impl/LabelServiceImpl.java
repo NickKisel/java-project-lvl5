@@ -1,10 +1,11 @@
-package hexlet.code.service;
+package hexlet.code.service.impl;
 
 import hexlet.code.dto.LabelDto;
 import hexlet.code.model.Label;
 import hexlet.code.model.Task;
 import hexlet.code.repository.LabelRepository;
 import hexlet.code.repository.TaskRepository;
+import hexlet.code.service.LabelService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;

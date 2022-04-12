@@ -3,7 +3,7 @@ package hexlet.code.controller;
 import hexlet.code.dto.TaskStatusDto;
 import hexlet.code.model.TaskStatus;
 import hexlet.code.repository.TaskStatusRepository;
-import hexlet.code.service.TaskStatusServiceImpl;
+import hexlet.code.service.impl.TaskStatusServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RequestBody;
