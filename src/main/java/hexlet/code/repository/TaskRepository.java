@@ -13,6 +13,6 @@ import java.util.Optional;
 public interface TaskRepository extends JpaRepository<Task, Long>, QuerydslPredicateExecutor<Task> {
     void deleteById(long id);
     Optional<Task> findFirstByAuthorIdOrExecutorId(long authorId, long executorId);
-    Optional<Task> findByTaskStatusId(long id);
+    Optional<Task> findFirstByTaskStatusId(long id);
     List<Task> findByLabels(Label label);
 }

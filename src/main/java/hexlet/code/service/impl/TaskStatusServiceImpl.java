@@ -36,7 +36,7 @@ public class TaskStatusServiceImpl implements TaskStatusService {
     @Override
     @Transactional
     public void deleteTaskStatus(Long id) {
-        boolean isPresentTask = taskRepository.findByTaskStatusId(id).isPresent();
+        boolean isPresentTask = taskRepository.findFirstByTaskStatusId(id).isPresent();
 
         if (isPresentTask) {
             throw new DataIntegrityViolationException("Can't delete status associated with present task");
