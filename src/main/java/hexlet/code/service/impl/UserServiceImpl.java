@@ -6,7 +6,7 @@ import hexlet.code.repository.TaskRepository;
 import hexlet.code.repository.UserRepository;
 import hexlet.code.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.AccessDeniedException;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -58,7 +58,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         final User user = userRepository.findById(id).get();
         boolean isPresentTaskForUser = taskRepository.findFirstByAuthorIdOrExecutorId(id, id).isPresent();
         if (isPresentTaskForUser) {
-            throw new AccessDeniedException("Can't delete user with existing task(s)");
+            throw new DataIntegrityViolationException("Can't delete user with existing task(s)");
         }
         userRepository.delete(user);
     }
