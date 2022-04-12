@@ -54,6 +54,7 @@ public class TaskController {
             @ApiResponse(responseCode = "404", description = "Task not found")
     })
     @GetMapping(ID)
+    @Transactional
     public Task getTask(
             @Parameter(description = "Id of Task to be found", required = true)
             @PathVariable Long id) {
